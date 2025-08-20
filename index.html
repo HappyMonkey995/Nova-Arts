@@ -437,6 +437,52 @@
             margin-right: auto;
         }
 
+        /* View All Plans Button Container */
+        .view-all-plans-container {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+        }
+
+        .view-all-plans-btn {
+            padding: 18px 50px;
+            background: linear-gradient(45deg, #06b6d4, #0891b2);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.3);
+        }
+
+        .view-all-plans-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .view-all-plans-btn:hover::before {
+            left: 100%;
+        }
+
+        .view-all-plans-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 
+                0 15px 35px rgba(6, 182, 212, 0.4),
+                0 0 25px rgba(6, 182, 212, 0.3);
+        }
+
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -578,6 +624,11 @@
                 align-items: center;
                 gap: 40px;
             }
+
+            .view-all-plans-btn {
+                padding: 15px 35px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -693,6 +744,11 @@
                         <li>24/7 Support</li>
                     </ul>
                 </div>
+            </div>
+            
+            <!-- Always visible View All Plans button -->
+            <div class="view-all-plans-container">
+                <a href="pricing.html" class="view-all-plans-btn">View All Plans</a>
             </div>
         </div>
     </section>
@@ -1006,59 +1062,11 @@
         // Expose refresh function globally for manual content updates
         window.refreshContent = refreshContent;
 
-        // Add click handlers for pricing cards in preview section
-        document.querySelectorAll('.pricing-preview .plan-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove selected class from all pricing cards
-                document.querySelectorAll('.pricing-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
-                
-                // Add selected class to the clicked card
-                const clickedCard = this.closest('.pricing-card');
-                clickedCard.classList.add('selected');
-                
-                const planName = clickedCard.querySelector('.plan-name').textContent;
-                const planPrice = clickedCard.querySelector('.plan-price').textContent;
-                
-                // Change button text to show selection
-                this.textContent = 'Selected ✓';
-                
-                // Show confirmation message
-                setTimeout(() => {
-                    alert(`Great choice! You've selected the ${planName} plan at ${planPrice}/month. Click "View All Plans" to complete your purchase or explore other options.`);
-                }, 300);
-            });
-        });
-
-        // Optional: Add a "View All Plans" button that appears when a plan is selected
-        function showViewAllPlansButton() {
-            const selectedCard = document.querySelector('.pricing-card.selected');
-            if (selectedCard && !document.querySelector('.view-all-plans-btn')) {
-                const viewAllBtn = document.createElement('a');
-                viewAllBtn.href = 'pricing.html';
-                viewAllBtn.className = 'cta-button view-all-plans-btn';
-                viewAllBtn.textContent = 'View All Plans';
-                viewAllBtn.style.marginTop = '30px';
-                viewAllBtn.style.display = 'inline-block';
-                
-                const pricingSection = document.querySelector('.pricing-preview .container');
-                pricingSection.appendChild(viewAllBtn);
-            }
-        }
-
-        // Update the pricing card click handlers to also show the view all plans button
-        document.querySelectorAll('.pricing-preview .plan-button').forEach(button => {
-            const originalHandler = button.onclick;
-            button.addEventListener('click', function(e) {
-                setTimeout(showViewAllPlansButton, 500);
-            });
-        });
-
         // Optional: Auto-refresh content every 5 minutes to keep data fresh
         setInterval(refreshContent, 5 * 60 * 1000);
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', initializeApp);
 
         /*
         API DOCUMENTATION:
@@ -1127,4 +1135,3 @@
     </script>
 </body>
 </html>
-
