@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Nova Arts</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a23 0%, #1a1a3e 50%, #2d1b69 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(147, 51, 234, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #9333ea, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #9333ea, #3b82f6);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #9333ea, #3b82f6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 20px rgba(147, 51, 234, 0.5); }
+            to { text-shadow: 0 0 40px rgba(59, 130, 246, 0.8), 0 0 60px rgba(6, 182, 212, 0.6); }
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Pricing Sections */
+        .pricing-section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .pricing-section:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #9333ea, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(147, 51, 234, 0.3);
+            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid rgba(147, 51, 234, 0.8);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(45deg, #9333ea, #3b82f6);
+            color: white;
+            padding: 8px 25px;
+            border-radius: 0 0 15px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(147, 51, 234, 0.1), rgba(59, 130, 246, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            border-color: rgba(147, 51, 234, 0.6);
+            box-shadow: 
+                0 20px 40px rgba(147, 51, 234, 0.3),
+                0 0 60px rgba(59, 130, 246, 0.2);
+        }
+
+        .pricing-card.popular:hover {
+            transform: translateY(-15px) scale(1.1);
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-price {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #9333ea, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-period {
+            font-size: 1rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-description {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            opacity: 0.9;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .plan-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #06b6d4;
+            font-weight: bold;
+        }
+
+        .plan-features li.unavailable {
+            opacity: 0.4;
+        }
+
+        .plan-features li.unavailable::before {
+            content: '✗';
+            color: #ef4444;
+        }
+
+        .plan-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #9333ea, #3b82f6);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            z-index: 1;
+        }
+
+        .plan-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(147, 51, 234, 0.4);
+        }
+
+        .plan-button.secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(147, 51, 234, 0.5);
+        }
+
+        .plan-button.secondary:hover {
+            background: rgba(147, 51, 234, 0.2);
+            border-color: rgba(147, 51, 234, 0.8);
+        }
+
+        /* Footer */
+        footer {
+            padding: 60px 0 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid rgba(147, 51, 234, 0.3);
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: center;
+            gap: 120px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #9333ea, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin: 10px 0;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #9333ea;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(147, 51, 234, 0.1), rgba(59, 130, 246, 0.1));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-circle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-circle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-circle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(10px) rotate(240deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+
+            .pricing-card.popular {
+                transform: none;
+            }
+
+            .pricing-card.popular:hover {
+                transform: translateY(-15px) scale(1.05);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+    </div>
+
+    <header>
+        <nav class="container">
+            <div class="logo"><a href="index.html" style="color: inherit; text-decoration: none;">Nova Arts</a></div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#features">Features</a></li>
+                <li><a href="pricing.html" class="active">Pricing</a></li>
+                <li><a href="support.html">Support</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Choose Your Plan</h1>
+                <p>Select the perfect plan for your needs. From individual creators to enterprise teams, we have solutions that scale with your ambitions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Individual Plans -->
+    <section class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">Individual Plans</h2>
+            <p class="section-subtitle">Perfect for solo creators, freelancers, and individuals looking to harness the power of Nova Arts</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="plan-name">Starter</h3>
+                    <div class="plan-price">$9</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">Perfect for beginners and personal projects</p>
+                    <ul class="plan-features">
+                        <li>5 Projects</li>
+                        <li>10GB Storage</li>
+                        <li>Basic Templates</li>
+                        <li>Email Support</li>
+                        <li class="unavailable">Advanced Analytics</li>
+                        <li class="unavailable">Priority Support</li>
+                    </ul>
+                    <button class="plan-button secondary">Get Started</button>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 class="plan-name">Professional</h3>
+                    <div class="plan-price">$29</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">Ideal for professional creators and small businesses</p>
+                    <ul class="plan-features">
+                        <li>Unlimited Projects</li>
+                        <li>100GB Storage</li>
+                        <li>Premium Templates</li>
+                        <li>Priority Email Support</li>
+                        <li>Advanced Analytics</li>
+                        <li class="unavailable">24/7 Phone Support</li>
+                    </ul>
+                    <button class="plan-button">Choose Plan</button>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="plan-name">Expert</h3>
+                    <div class="plan-price">$59</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">For power users and growing agencies</p>
+                    <ul class="plan-features">
+                        <li>Unlimited Projects</li>
+                        <li>500GB Storage</li>
+                        <li>All Templates</li>
+                        <li>24/7 Support</li>
+                        <li>Advanced Analytics</li>
+                        <li>API Access</li>
+                    </ul>
+                    <button class="plan-button secondary">Choose Plan</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Plans -->
+    <section class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">Team Plans</h2>
+            <p class="section-subtitle">Collaborate seamlessly with your team and manage projects at scale</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="plan-name">Team Starter</h3>
+                    <div class="plan-price">$79</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">Perfect for small teams up to 5 members</p>
+                    <ul class="plan-features">
+                        <li>5 Team Members</li>
+                        <li>Unlimited Projects</li>
+                        <li>200GB Storage</li>
+                        <li>Team Collaboration</li>
+                        <li>Advanced Analytics</li>
+                        <li class="unavailable">Custom Integrations</li>
+                    </ul>
+                    <button class="plan-button secondary">Start Free Trial</button>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Best Value</div>
+                    <h3 class="plan-name">Team Pro</h3>
+                    <div class="plan-price">$149</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">Ideal for growing teams up to 15 members</p>
+                    <ul class="plan-features">
+                        <li>15 Team Members</li>
+                        <li>Unlimited Projects</li>
+                        <li>1TB Storage</li>
+                        <li>Advanced Collaboration</li>
+                        <li>Real-time Analytics</li>
+                        <li>Basic Integrations</li>
+                    </ul>
+                    <button class="plan-button">Start Free Trial</button>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="plan-name">Team Enterprise</h3>
+                    <div class="plan-price">$299</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">For large teams up to 50 members</p>
+                    <ul class="plan-features">
+                        <li>50 Team Members</li>
+                        <li>Unlimited Projects</li>
+                        <li>5TB Storage</li>
+                        <li>Advanced Features</li>
+                        <li>Custom Analytics</li>
+                        <li>All Integrations</li>
+                    </ul>
+                    <button class="plan-button secondary">Contact Sales</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Plans -->
+    <section class="pricing-section">
+        <div class="container">
+            <h2 class="section-title">Enterprise Solutions</h2>
+            <p class="section-subtitle">Scalable solutions for organizations with complex needs and custom requirements</p>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="plan-name">Enterprise Basic</h3>
+                    <div class="plan-price">$599</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">For organizations up to 100 users</p>
+                    <ul class="plan-features">
+                        <li>100 Users</li>
+                        <li>Unlimited Projects</li>
+                        <li>10TB Storage</li>
+                        <li>Custom Branding</li>
+                        <li>Advanced Security</li>
+                        <li>Dedicated Support</li>
+                    </ul>
+                    <button class="plan-button secondary">Contact Sales</button>
+                </div>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Enterprise Choice</div>
+                    <h3 class="plan-name">Enterprise Pro</h3>
+                    <div class="plan-price">$1,199</div>
+                    <div class="plan-period">per month</div>
+                    <p class="plan-description">For large organizations up to 500 users</p>
+                    <ul class="plan-features">
+                        <li>500 Users</li>
+                        <li>Unlimited Everything</li>
+                        <li>Unlimited Storage</li>
+                        <li>White-label Solution</li>
+                        <li>Enterprise Security</li>
+                        <li>24/7 Dedicated Support</li>
+                    </ul>
+                    <button class="plan-button">Contact Sales</button>
+                </div>
+
+                <div class="pricing-card">
+                    <h3 class="plan-name">Custom Enterprise</h3>
+                    <div class="plan-price">Custom</div>
+                    <div class="plan-period">pricing</div>
+                    <p class="plan-description">Tailored solutions for unique requirements</p>
+                    <ul class="plan-features">
+                        <li>Unlimited Users</li>
+                        <li>Custom Features</li>
+                        <li>Unlimited Storage</li>
+                        <li>Custom Integrations</li>
+                        <li>On-premise Deployment</li>
+                        <li>Executive Support</li>
+                    </ul>
+                    <button class="plan-button secondary">Let's Talk</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Product</h3>
+                    <ul>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="pricing.html">Pricing</a></li>
+                        <li><a href="#">API</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="support.html">Help Center</a></li>
+                        <li><a href="support.html">Contact</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p>&copy; 2025 Nova Arts. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Header background on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(10, 10, 35, 0.95)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.05)';
+            }
+        });
+
+        // Add click handlers for pricing cards
+        document.querySelectorAll('.plan-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
+                const planPrice = this.closest('.pricing-card').querySelector('.plan-price').textContent;
+                
+                if (this.textContent.includes('Contact') || this.textContent.includes('Talk')) {
+                    alert(`Thank you for your interest in ${planName}! Our sales team will contact you within 24 hours to discuss your custom requirements.`);
+                } else if (this.textContent.includes('Trial')) {
+                    alert(`Great choice! Your 14-day free trial for ${planName} is starting now. Check your email for setup instructions.`);
+                } else {
+                    alert(`You've selected ${planName} at ${planPrice}/month. Redirecting to checkout...`);
+                }
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
