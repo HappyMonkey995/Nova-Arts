@@ -308,9 +308,35 @@
             border: 2px solid rgba(147, 51, 234, 0.5);
         }
 
-        .plan-button.secondary:hover {
-            background: rgba(147, 51, 234, 0.2);
-            border-color: rgba(147, 51, 234, 0.8);
+        .pricing-card.selected {
+            border: 2px solid rgba(6, 182, 212, 0.8);
+            box-shadow: 
+                0 20px 40px rgba(6, 182, 212, 0.3),
+                0 0 60px rgba(59, 130, 246, 0.2);
+            transform: translateY(-10px) scale(1.05);
+        }
+
+        .pricing-card.selected::after {
+            content: '✓ Selected';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(6, 182, 212, 0.9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .pricing-card.selected .plan-button {
+            background: linear-gradient(45deg, #06b6d4, #0891b2);
+        }
+
+        .pricing-card.selected .plan-button.secondary {
+            background: rgba(6, 182, 212, 0.2);
+            border-color: rgba(6, 182, 212, 0.8);
         }
 
         /* Footer */
@@ -675,15 +701,47 @@
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                const planName = this.closest('.pricing-card').querySelector('.plan-name').textContent;
-                const planPrice = this.closest('.pricing-card').querySelector('.plan-price').textContent;
+                // Remove selected class from all pricing cards
+                document.querySelectorAll('.pricing-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
                 
+                // Reset all button texts
+                document.querySelectorAll('.plan-button').forEach(btn => {
+                    if (btn.textContent.includes('Selected')) {
+                        const originalText = btn.getAttribute('data-original-text') || 'Choose Plan';
+                        btn.textContent = originalText;
+                    }
+                });
+                
+                // Store original button text if not already stored
+                if (!this.getAttribute('data-original-text')) {
+                    this.setAttribute('data-original-text', this.textContent);
+                }
+                
+                // Add selected class to the clicked card
+                const clickedCard = this.closest('.pricing-card');
+                clickedCard.classList.add('selected');
+                
+                const planName = clickedCard.querySelector('.plan-name').textContent;
+                const planPrice = clickedCard.querySelector('.plan-price').textContent;
+                
+                // Handle different button types
                 if (this.textContent.includes('Contact') || this.textContent.includes('Talk')) {
-                    alert(`Thank you for your interest in ${planName}! Our sales team will contact you within 24 hours to discuss your custom requirements.`);
+                    this.textContent = 'Selected ✓';
+                    setTimeout(() => {
+                        alert(`Thank you for your interest in ${planName}! Our sales team will contact you within 24 hours to discuss your custom requirements.`);
+                    }, 300);
                 } else if (this.textContent.includes('Trial')) {
-                    alert(`Great choice! Your 14-day free trial for ${planName} is starting now. Check your email for setup instructions.`);
+                    this.textContent = 'Selected ✓';
+                    setTimeout(() => {
+                        alert(`Great choice! Your 14-day free trial for ${planName} is starting now. Check your email for setup instructions.`);
+                    }, 300);
                 } else {
-                    alert(`You've selected ${planName} at ${planPrice}/month. Redirecting to checkout...`);
+                    this.textContent = 'Selected ✓';
+                    setTimeout(() => {
+                        alert(`You've selected ${planName} at ${planPrice}/month. Redirecting to checkout...`);
+                    }, 300);
                 }
             });
         });
