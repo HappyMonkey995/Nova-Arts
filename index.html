@@ -654,7 +654,7 @@
             <h2 class="section-title">Individual Plans</h2>
             <p class="section-subtitle">Choose the perfect plan to get started with Nova Arts</p>
             <div class="pricing-grid">
-                <div class="pricing-card" data-plan="starter">
+                <div class="pricing-card">
                     <h3 class="plan-name">Starter</h3>
                     <div class="plan-price">$9</div>
                     <div class="plan-period">per month</div>
@@ -665,10 +665,10 @@
                         <li>Basic Templates</li>
                         <li>Email Support</li>
                     </ul>
-                    <a href="#" class="plan-button secondary">Get Started</a>
+                    <a href="pricing.html" class="plan-button secondary">Get Started</a>
                 </div>
 
-                <div class="pricing-card popular" data-plan="professional">
+                <div class="pricing-card popular">
                     <div class="popular-badge">Most Popular</div>
                     <h3 class="plan-name">Professional</h3>
                     <div class="plan-price">$29</div>
@@ -680,10 +680,10 @@
                         <li>Premium Templates</li>
                         <li>Priority Support</li>
                     </ul>
-                    <a href="#" class="plan-button">Choose Plan</a>
+                    <a href="pricing.html" class="plan-button">Choose Plan</a>
                 </div>
 
-                <div class="pricing-card" data-plan="expert">
+                <div class="pricing-card">
                     <h3 class="plan-name">Expert</h3>
                     <div class="plan-price">$59</div>
                     <div class="plan-period">per month</div>
@@ -694,7 +694,7 @@
                         <li>All Templates</li>
                         <li>24/7 Support</li>
                     </ul>
-                    <a href="#" class="plan-button secondary">Choose Plan</a>
+                    <a href="pricing.html" class="plan-button secondary">Choose Plan</a>
                 </div>
             </div>
         </div>
@@ -1009,21 +1009,124 @@
         // Expose refresh function globally for manual content updates
         window.refreshContent = refreshContent;
 
-        // NEW: Add click handlers for pricing cards to navigate to pricing page
-        document.querySelectorAll('.pricing-card').forEach(card => {
-            card.addEventListener('click', function(e) {
+        // Add click handlers for pricing cards in preview section
+        document.querySelectorAll('.pricing-preview .plan-button').forEach(button => {
+            button.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                const planType = this.dataset.plan;
-                if (planType) {
-                    // Navigate to pricing page with plan parameter
-                    window.location.href = `pricing.html?plan=${planType}`;
-                }
+                // Remove selected class from all pricing cards
+                document.querySelectorAll('.pricing-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
+                
+                // Add selected class to the clicked card
+                const clickedCard = this.closest('.pricing-card');
+                clickedCard.classList.add('selected');
+                
+                const planName = clickedCard.querySelector('.plan-name').textContent;
+                const planPrice = clickedCard.querySelector('.plan-price').textContent;
+                
+                // Change button text to show selection
+                this.textContent = 'Selected ✓';
+                
+                // Show confirmation message
+                setTimeout(() => {
+                    alert(`Great choice! You've selected the ${planName} plan at ${planPrice}/month. Click "View All Plans" to complete your purchase or explore other options.`);
+                }, 300);
+            });
+        });
+
+        // Optional: Add a "View All Plans" button that appears when a plan is selected
+        function showViewAllPlansButton() {
+            const selectedCard = document.querySelector('.pricing-card.selected');
+            if (selectedCard && !document.querySelector('.view-all-plans-btn')) {
+                const viewAllBtn = document.createElement('a');
+                viewAllBtn.href = 'pricing.html';
+                viewAllBtn.className = 'cta-button view-all-plans-btn';
+                viewAllBtn.textContent = 'View All Plans';
+                viewAllBtn.style.marginTop = '30px';
+                viewAllBtn.style.display = 'inline-block';
+                
+                const pricingSection = document.querySelector('.pricing-preview .container');
+                pricingSection.appendChild(viewAllBtn);
+            }
+        }
+
+        // Update the pricing card click handlers to also show the view all plans button
+        document.querySelectorAll('.pricing-preview .plan-button').forEach(button => {
+            const originalHandler = button.onclick;
+            button.addEventListener('click', function(e) {
+                setTimeout(showViewAllPlansButton, 500);
             });
         });
 
         // Optional: Auto-refresh content every 5 minutes to keep data fresh
         setInterval(refreshContent, 5 * 60 * 1000);
 
-        // Initialize the app when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initializeApp);
+        /*
+        API DOCUMENTATION:
+        
+        Expected API Endpoints and Response Formats:
+        
+        1. GET /api/branding
+        {
+            "logo": "Nova Arts",
+            "copyright": "© 2025 Nova Arts. All rights reserved."
+        }
+        
+        2. GET /api/hero
+        {
+            "title": "Future is Now",
+            "subtitle": "Unleash the power of tomorrow's technology...",
+            "ctaText": "Explore Solutions"
+        }
+        
+        3. GET /api/features
+        {
+            "title": "Our Features",
+            "items": [
+                {
+                    "icon": "🚀",
+                    "title": "Lightning Fast",
+                    "desc": "Experience unparalleled speed..."
+                }
+                // ... more feature objects
+            ]
+        }
+        
+        4. GET /api/stats
+        {
+            "title": "Our Impact",
+            "items": [
+                {
+                    "number": "1M+",
+                    "label": "Active Users"
+                }
+                // ... more stat objects
+            ]
+        }
+        
+        5. GET /api/footer
+        {
+            "sections": [
+                {
+                    "title": "Product",
+                    "links": ["Features", "Pricing", "API", "Documentation"]
+                },
+                {
+                    "title": "Support",
+                    "links": ["Help Center", "Contact", "Privacy", "Terms"]
+                }
+            ],
+            "copyright": "© 2025 Nova Arts. All rights reserved."
+        }
+        
+        Usage:
+        - The website will automatically load content from these APIs on page load
+        - If any API fails, it falls back to default content
+        - Call refreshContent() to manually reload data from APIs
+        - Content auto-refreshes every 5 minutes
+        */
+    </script>
+</body>
+</html>
