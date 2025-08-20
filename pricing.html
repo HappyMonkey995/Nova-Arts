@@ -486,12 +486,12 @@
     </section>
 
     <!-- Individual Plans -->
-    <section class="pricing-section">
+    <section class="pricing-section" id="individual-plans">
         <div class="container">
             <h2 class="section-title">Individual Plans</h2>
             <p class="section-subtitle">Perfect for solo creators, freelancers, and individuals looking to harness the power of Nova Arts</p>
             <div class="pricing-grid">
-                <div class="pricing-card">
+                <div class="pricing-card" data-plan="starter">
                     <h3 class="plan-name">Starter</h3>
                     <div class="plan-price">$9</div>
                     <div class="plan-period">per month</div>
@@ -507,7 +507,7 @@
                     <button class="plan-button secondary">Get Started</button>
                 </div>
 
-                <div class="pricing-card popular">
+                <div class="pricing-card popular" data-plan="professional">
                     <div class="popular-badge">Most Popular</div>
                     <h3 class="plan-name">Professional</h3>
                     <div class="plan-price">$29</div>
@@ -524,7 +524,7 @@
                     <button class="plan-button">Choose Plan</button>
                 </div>
 
-                <div class="pricing-card">
+                <div class="pricing-card" data-plan="expert">
                     <h3 class="plan-name">Expert</h3>
                     <div class="plan-price">$59</div>
                     <div class="plan-period">per month</div>
@@ -544,12 +544,12 @@
     </section>
 
     <!-- Team Plans -->
-    <section class="pricing-section">
+    <section class="pricing-section" id="team-plans">
         <div class="container">
             <h2 class="section-title">Team Plans</h2>
             <p class="section-subtitle">Collaborate seamlessly with your team and manage projects at scale</p>
             <div class="pricing-grid">
-                <div class="pricing-card">
+                <div class="pricing-card" data-plan="team-starter">
                     <h3 class="plan-name">Team Starter</h3>
                     <div class="plan-price">$79</div>
                     <div class="plan-period">per month</div>
@@ -565,7 +565,7 @@
                     <button class="plan-button secondary">Start Free Trial</button>
                 </div>
 
-                <div class="pricing-card popular">
+                <div class="pricing-card popular" data-plan="team-pro">
                     <div class="popular-badge">Best Value</div>
                     <h3 class="plan-name">Team Pro</h3>
                     <div class="plan-price">$149</div>
@@ -582,7 +582,7 @@
                     <button class="plan-button">Start Free Trial</button>
                 </div>
 
-                <div class="pricing-card">
+                <div class="pricing-card" data-plan="team-enterprise">
                     <h3 class="plan-name">Team Enterprise</h3>
                     <div class="plan-price">$299</div>
                     <div class="plan-period">per month</div>
@@ -602,12 +602,12 @@
     </section>
 
     <!-- Enterprise Plans -->
-    <section class="pricing-section">
+    <section class="pricing-section" id="enterprise-plans">
         <div class="container">
             <h2 class="section-title">Enterprise Solutions</h2>
             <p class="section-subtitle">Scalable solutions for organizations with complex needs and custom requirements</p>
             <div class="pricing-grid">
-                <div class="pricing-card">
+                <div class="pricing-card" data-plan="enterprise-basic">
                     <h3 class="plan-name">Enterprise Basic</h3>
                     <div class="plan-price">$599</div>
                     <div class="plan-period">per month</div>
@@ -623,7 +623,7 @@
                     <button class="plan-button secondary">Contact Sales</button>
                 </div>
 
-                <div class="pricing-card popular">
+                <div class="pricing-card popular" data-plan="enterprise-pro">
                     <div class="popular-badge">Enterprise Choice</div>
                     <h3 class="plan-name">Enterprise Pro</h3>
                     <div class="plan-price">$1,199</div>
@@ -640,7 +640,7 @@
                     <button class="plan-button">Contact Sales</button>
                 </div>
 
-                <div class="pricing-card">
+                <div class="pricing-card" data-plan="custom-enterprise">
                     <h3 class="plan-name">Custom Enterprise</h3>
                     <div class="plan-price">Custom</div>
                     <div class="plan-period">pricing</div>
@@ -686,6 +686,50 @@
     </footer>
 
     <script>
+        // Get URL parameters to check for selected plan
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Function to select a plan and scroll to it
+        function selectPlanFromUrl() {
+            const selectedPlan = getUrlParameter('plan');
+            if (selectedPlan) {
+                // Find the matching plan card
+                const planCard = document.querySelector(`[data-plan="${selectedPlan}"]`);
+                if (planCard) {
+                    // Remove selected class from all cards
+                    document.querySelectorAll('.pricing-card').forEach(card => {
+                        card.classList.remove('selected');
+                    });
+                    
+                    // Add selected class to the target card
+                    planCard.classList.add('selected');
+                    
+                    // Find the section containing the plan
+                    const section = planCard.closest('.pricing-section');
+                    
+                    // Smooth scroll to the section with some delay to ensure page is loaded
+                    setTimeout(() => {
+                        section.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }, 500);
+                    
+                    // Update the button text to show selection
+                    const button = planCard.querySelector('.plan-button');
+                    if (button) {
+                        button.setAttribute('data-original-text', button.textContent);
+                        button.textContent = 'Selected ✓';
+                    }
+                }
+            }
+        }
+
         // Header background on scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
@@ -696,7 +740,7 @@
             }
         });
 
-        // Add click handlers for pricing cards
+        // Add click handlers for pricing cards (removed popup functionality)
         document.querySelectorAll('.plan-button').forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -723,25 +767,15 @@
                 const clickedCard = this.closest('.pricing-card');
                 clickedCard.classList.add('selected');
                 
-                const planName = clickedCard.querySelector('.plan-name').textContent;
-                const planPrice = clickedCard.querySelector('.plan-price').textContent;
+                // Change button text to show selection
+                this.textContent = 'Selected ✓';
                 
-                // Handle different button types
-                if (this.textContent.includes('Contact') || this.textContent.includes('Talk')) {
-                    this.textContent = 'Selected ✓';
-                    setTimeout(() => {
-                        alert(`Thank you for your interest in ${planName}! Our sales team will contact you within 24 hours to discuss your custom requirements.`);
-                    }, 300);
-                } else if (this.textContent.includes('Trial')) {
-                    this.textContent = 'Selected ✓';
-                    setTimeout(() => {
-                        alert(`Great choice! Your 14-day free trial for ${planName} is starting now. Check your email for setup instructions.`);
-                    }, 300);
-                } else {
-                    this.textContent = 'Selected ✓';
-                    setTimeout(() => {
-                        alert(`You've selected ${planName} at ${planPrice}/month. Redirecting to checkout...`);
-                    }, 300);
+                // Update URL without causing page reload
+                const planType = clickedCard.getAttribute('data-plan');
+                if (planType) {
+                    const newUrl = new URL(window.location);
+                    newUrl.searchParams.set('plan', planType);
+                    window.history.replaceState({}, '', newUrl);
                 }
             });
         });
@@ -758,6 +792,11 @@
                     });
                 }
             });
+        });
+
+        // Initialize page - check for plan selection from URL
+        document.addEventListener('DOMContentLoaded', function() {
+            selectPlanFromUrl();
         });
     </script>
 </body>
