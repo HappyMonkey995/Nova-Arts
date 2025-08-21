@@ -308,37 +308,6 @@
             border: 2px solid rgba(147, 51, 234, 0.5);
         }
 
-        .pricing-card.selected {
-            border: 2px solid rgba(6, 182, 212, 0.8);
-            box-shadow: 
-                0 20px 40px rgba(6, 182, 212, 0.3),
-                0 0 60px rgba(59, 130, 246, 0.2);
-            transform: translateY(-10px) scale(1.05);
-        }
-
-        .pricing-card.selected::after {
-            content: '✓ Selected';
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(6, 182, 212, 0.9);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            z-index: 2;
-        }
-
-        .pricing-card.selected .plan-button {
-            background: linear-gradient(45deg, #06b6d4, #0891b2);
-        }
-
-        .pricing-card.selected .plan-button.secondary {
-            background: rgba(6, 182, 212, 0.2);
-            border-color: rgba(6, 182, 212, 0.8);
-        }
-
         /* Footer */
         footer {
             padding: 60px 0 30px;
@@ -480,7 +449,7 @@
         <div class="container">
             <div class="hero-content">
                 <h1>Choose Your Plan</h1>
-                <p>Select the perfect plan for your needs. From individual creators to enterprise teams, we have solutions that scale with your ambitions.</p>
+                <p>Select the perfect plan for your needs. One-time purchase with lifetime access to your chosen features.</p>
             </div>
         </div>
     </section>
@@ -493,8 +462,8 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3 class="plan-name">Starter</h3>
-                    <div class="plan-price">$9</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">500 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">Perfect for beginners and personal projects</p>
                     <ul class="plan-features">
                         <li>5 Projects</li>
@@ -504,14 +473,14 @@
                         <li class="unavailable">Advanced Analytics</li>
                         <li class="unavailable">Priority Support</li>
                     </ul>
-                    <button class="plan-button secondary">Get Started</button>
+                    <a href="https://www.roblox.com/games/starter-plan-purchase" class="plan-button secondary">Get Starter Plan</a>
                 </div>
 
                 <div class="pricing-card popular">
                     <div class="popular-badge">Most Popular</div>
                     <h3 class="plan-name">Professional</h3>
-                    <div class="plan-price">$29</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">1,500 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">Ideal for professional creators and small businesses</p>
                     <ul class="plan-features">
                         <li>Unlimited Projects</li>
@@ -521,13 +490,13 @@
                         <li>Advanced Analytics</li>
                         <li class="unavailable">24/7 Phone Support</li>
                     </ul>
-                    <button class="plan-button">Choose Plan</button>
+                    <a href="https://www.roblox.com/games/professional-plan-purchase" class="plan-button">Get Professional Plan</a>
                 </div>
 
                 <div class="pricing-card">
                     <h3 class="plan-name">Expert</h3>
-                    <div class="plan-price">$59</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">3,000 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">For power users and growing agencies</p>
                     <ul class="plan-features">
                         <li>Unlimited Projects</li>
@@ -537,7 +506,7 @@
                         <li>Advanced Analytics</li>
                         <li>API Access</li>
                     </ul>
-                    <button class="plan-button secondary">Choose Plan</button>
+                    <a href="https://www.roblox.com/games/expert-plan-purchase" class="plan-button secondary">Get Expert Plan</a>
                 </div>
             </div>
         </div>
@@ -551,8 +520,8 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3 class="plan-name">Team Starter</h3>
-                    <div class="plan-price">$79</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">4,000 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">Perfect for small teams up to 5 members</p>
                     <ul class="plan-features">
                         <li>5 Team Members</li>
@@ -562,14 +531,14 @@
                         <li>Advanced Analytics</li>
                         <li class="unavailable">Custom Integrations</li>
                     </ul>
-                    <button class="plan-button secondary">Start Free Trial</button>
+                    <a href="https://www.roblox.com/games/team-starter-purchase" class="plan-button secondary">Get Team Starter</a>
                 </div>
 
                 <div class="pricing-card popular">
                     <div class="popular-badge">Best Value</div>
                     <h3 class="plan-name">Team Pro</h3>
-                    <div class="plan-price">$149</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">7,500 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">Ideal for growing teams up to 15 members</p>
                     <ul class="plan-features">
                         <li>15 Team Members</li>
@@ -579,13 +548,13 @@
                         <li>Real-time Analytics</li>
                         <li>Basic Integrations</li>
                     </ul>
-                    <button class="plan-button">Start Free Trial</button>
+                    <a href="https://www.roblox.com/games/team-pro-purchase" class="plan-button">Get Team Pro</a>
                 </div>
 
                 <div class="pricing-card">
                     <h3 class="plan-name">Team Enterprise</h3>
-                    <div class="plan-price">$299</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">15,000 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">For large teams up to 50 members</p>
                     <ul class="plan-features">
                         <li>50 Team Members</li>
@@ -595,7 +564,7 @@
                         <li>Custom Analytics</li>
                         <li>All Integrations</li>
                     </ul>
-                    <button class="plan-button secondary">Contact Sales</button>
+                    <a href="https://www.roblox.com/games/team-enterprise-purchase" class="plan-button secondary">Get Team Enterprise</a>
                 </div>
             </div>
         </div>
@@ -609,8 +578,8 @@
             <div class="pricing-grid">
                 <div class="pricing-card">
                     <h3 class="plan-name">Enterprise Basic</h3>
-                    <div class="plan-price">$599</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">30,000 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">For organizations up to 100 users</p>
                     <ul class="plan-features">
                         <li>100 Users</li>
@@ -620,14 +589,14 @@
                         <li>Advanced Security</li>
                         <li>Dedicated Support</li>
                     </ul>
-                    <button class="plan-button secondary">Contact Sales</button>
+                    <a href="https://www.roblox.com/games/enterprise-basic-purchase" class="plan-button secondary">Get Enterprise Basic</a>
                 </div>
 
                 <div class="pricing-card popular">
                     <div class="popular-badge">Enterprise Choice</div>
                     <h3 class="plan-name">Enterprise Pro</h3>
-                    <div class="plan-price">$1,199</div>
-                    <div class="plan-period">per month</div>
+                    <div class="plan-price">60,000 R$</div>
+                    <div class="plan-period">one-time payment</div>
                     <p class="plan-description">For large organizations up to 500 users</p>
                     <ul class="plan-features">
                         <li>500 Users</li>
@@ -637,7 +606,7 @@
                         <li>Enterprise Security</li>
                         <li>24/7 Dedicated Support</li>
                     </ul>
-                    <button class="plan-button">Contact Sales</button>
+                    <a href="https://www.roblox.com/games/enterprise-pro-purchase" class="plan-button">Get Enterprise Pro</a>
                 </div>
 
                 <div class="pricing-card">
@@ -653,7 +622,7 @@
                         <li>On-premise Deployment</li>
                         <li>Executive Support</li>
                     </ul>
-                    <button class="plan-button secondary">Let's Talk</button>
+                    <a href="https://www.roblox.com/games/custom-enterprise-contact" class="plan-button secondary">Contact for Pricing</a>
                 </div>
             </div>
         </div>
@@ -694,56 +663,6 @@
             } else {
                 header.style.background = 'rgba(255, 255, 255, 0.05)';
             }
-        });
-
-        // Add click handlers for pricing cards
-        document.querySelectorAll('.plan-button').forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove selected class from all pricing cards
-                document.querySelectorAll('.pricing-card').forEach(card => {
-                    card.classList.remove('selected');
-                });
-                
-                // Reset all button texts
-                document.querySelectorAll('.plan-button').forEach(btn => {
-                    if (btn.textContent.includes('Selected')) {
-                        const originalText = btn.getAttribute('data-original-text') || 'Choose Plan';
-                        btn.textContent = originalText;
-                    }
-                });
-                
-                // Store original button text if not already stored
-                if (!this.getAttribute('data-original-text')) {
-                    this.setAttribute('data-original-text', this.textContent);
-                }
-                
-                // Add selected class to the clicked card
-                const clickedCard = this.closest('.pricing-card');
-                clickedCard.classList.add('selected');
-                
-                const planName = clickedCard.querySelector('.plan-name').textContent;
-                const planPrice = clickedCard.querySelector('.plan-price').textContent;
-                
-                // Handle different button types
-                if (this.textContent.includes('Contact') || this.textContent.includes('Talk')) {
-                    this.textContent = 'Selected ✓';
-                    setTimeout(() => {
-                        alert(`Thank you for your interest in ${planName}! Our sales team will contact you within 24 hours to discuss your custom requirements.`);
-                    }, 300);
-                } else if (this.textContent.includes('Trial')) {
-                    this.textContent = 'Selected ✓';
-                    setTimeout(() => {
-                        alert(`Great choice! Your 14-day free trial for ${planName} is starting now. Check your email for setup instructions.`);
-                    }, 300);
-                } else {
-                    this.textContent = 'Selected ✓';
-                    setTimeout(() => {
-                        alert(`You've selected ${planName} at ${planPrice}/month. Redirecting to checkout...`);
-                    }, 300);
-                }
-            });
         });
 
         // Smooth scrolling for anchor links
